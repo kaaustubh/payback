@@ -49,7 +49,6 @@ class Feed: NSObject, Codable {
         }
     }
     
-    
     func encode(with aCoder: NSCoder)
     {
         aCoder.encode(self.name, forKey: "name")
@@ -57,11 +56,11 @@ class Feed: NSObject, Codable {
         aCoder.encode(self.subline, forKey: "subline")
         aCoder.encode(self.data, forKey: "data")
         aCoder.encode(self.score, forKey: "score")
-        aCoder.encode(self.score, forKey: "items")
+        aCoder.encode(self.items, forKey: "items")
         aCoder.encode(self.type.rawValue, forKey: "type")
     }
     
-    required init?(coder aDecoder: NSCoder)
+    required init(coder aDecoder: NSCoder)
     {
         if let data = aDecoder.decodeObject(forKey: "name") as? String {
             self.name = data
@@ -82,13 +81,14 @@ class Feed: NSObject, Codable {
             self.score = data
         }
         
-        if let data = aDecoder.decodeObject(forKey: "items") as? Int {
-            self.score = data
+        if let data = aDecoder.decodeObject(forKey: "items") as? [String] {
+            self.items = data
         }
         
         if let data = aDecoder.decodeObject(forKey: "type") as? String {
             self.type = FeedType(rawValue: data)!
         }
+        
     }
 }
 

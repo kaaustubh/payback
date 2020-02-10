@@ -30,8 +30,11 @@ class FeedService {
                             let feed = Feed(jsonFeed: jsonFeed as! [String : Any])
                             feeds.append(feed)
                         }
+                        if feeds.count > 0 {
+                            LocalStorage.shared.saveWebFeeds(feeds: feeds)
+                        }
                     }
-                    
+                    feeds.append(LocalStorage.shared.shoppingListFeed())
                     //Somehow this doesnt work because of \ and \n
 //                    let postResponse = try JSONDecoder().decode(FeedResponse.self, from: strData as! Data)
                     
@@ -54,10 +57,23 @@ class FeedService {
 }
 
 let shoppingListKey = "shopping_list"
+let webFeeds = "webfeeds"
 
 class LocalStorage {
     static let shared = LocalStorage()
     let userDefaults = UserDefaults.standard
+    
+    func saveWebFeeds(feeds: [Feed]){
+        saveData(data: feeds, for: webFeeds)
+    }
+    
+    func localWebFeeds() -> [Feed] {
+        var feeds = [Feed]()
+        if let data = self.data(for: webFeeds), let localFeeds = (data as? [Feed]) {
+            feeds = localFeeds
+        }
+        return feeds
+    }
     
     func shoppingListFeed() -> Feed {
         var feed: Feed!
@@ -71,13 +87,19 @@ class LocalStorage {
     }
     
     func saveShoppingList(feed: Feed) {
-        self.saveData(data: feed, for: "shopping_list")
+        self.saveData(data: feed, for: shoppingListKey)
     }
     
     func saveData(data: Any, for key: String) {
         do {
-            let encoded = try JSONEncoder().encode(data as! Feed)
-            UserDefaults.standard.set(encoded, forKey: shoppingListKey)
+            var encodedData: Data!
+            if data is Feed {
+                encodedData = try JSONEncoder().encode(data as! Feed)
+            }
+            else {
+                encodedData = try JSONEncoder().encode(data as! [Feed])
+            }
+            UserDefaults.standard.set(encodedData, forKey: key)
             userDefaults.synchronize()
         }
         catch {
@@ -87,9 +109,17 @@ class LocalStorage {
     
     func data(for key: String) -> Any? {
         do {
-            if let feedData = UserDefaults.standard.data(forKey: shoppingListKey) {
-                let feed: Feed = try JSONDecoder().decode(Feed.self, from: feedData)
-                return feed
+            if let feedData = UserDefaults.standard.data(forKey: key) {
+                var data: Any!
+                switch key {
+                case webFeeds:
+                    data = try JSONDecoder().decode([Feed].self, from: feedData)
+                case shoppingListKey:
+                    data = try JSONDecoder().decode(Feed.self, from: feedData)
+                default:
+                    print("Default")
+                }
+                return data
             }
         }
         catch {

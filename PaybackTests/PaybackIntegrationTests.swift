@@ -31,6 +31,18 @@ class PaybackIntegrationTests: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
+    func testLocalFeeds() {
+        let postsExpectation = expectation(description: "Get Posts")
+        _ = FeedService().loadFeeds(completion: {[weak self] feeds,error in
+            guard let self = self else { return }
+            let localFeeds = self.extractedExpr.localWebFeeds()
+            if localFeeds.count > 0 {
+                postsExpectation.fulfill()
+            }
+        })
+        waitForExpectations(timeout: 3, handler: nil)
+    }
+    
     func testLocalShoppingListStorage() {
         let feed = extractedExpr.shoppingListFeed()
         XCTAssertTrue(feed.type == .shopping_list)
