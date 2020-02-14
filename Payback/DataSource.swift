@@ -20,12 +20,18 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource {
        
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let feed = self.data.value[indexPath.row]
-        if feed.type != .shopping_list {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NormalFeedCell", for: indexPath) as! NormalFeedCell
+        switch feed.type {
+        case .image, .video:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ImageFeedCell", for: indexPath) as! NormalFeedCell
             cell.feed = feed
             return cell
+        case .website:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "WebFeedCell", for: indexPath) as! WebFeedCell
+            cell.feed = feed
+            return cell
+        default:
+            print("Default")
         }
-        
         return UITableViewCell()
        }
 }
