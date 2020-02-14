@@ -8,7 +8,13 @@
 
 import Foundation
 
-class FeedService {
+protocol FeedServiceProtocol: class {
+    func loadFeeds(completion: @escaping ([Feed]?, CustomError?) -> ()) -> URLSessionDataTask?
+}
+
+class FeedService: FeedServiceProtocol {
+    
+    static let shared = FeedService()
     
     private let client = NetworkEngine(baseUrl: "https://firebasestorage.googleapis.com/v0/b/payback-test.appspot.com/o/feed.json?alt=media&token=0f3f9a33-39df-4ad2-b9df-add07796a0fa")
     
@@ -50,10 +56,6 @@ class FeedService {
             }
         }
     }
-    
-//    private func shoppingList() -> Feed {
-//
-//    }
 }
 
 let shoppingListKey = "shopping_list"

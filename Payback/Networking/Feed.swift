@@ -12,6 +12,29 @@ struct FeedResponse: Codable{
     var tiles: [Feed]?
 }
 
+class ShoppingItem: NSObject, Codable {
+    var title: String = ""
+    var complete = false
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.title, forKey: "title")
+        aCoder.encode(Int(truncating: NSNumber(booleanLiteral: self.complete)), forKey: "complete")
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        if let data = aDecoder.decodeObject(forKey: "title") as? String {
+            self.title = data
+        }
+        
+        if let data = aDecoder.decodeObject(forKey: "complete") as? Int{
+            self.complete = Bool(exactly: NSNumber(value: data)) ?? false
+        }
+    }
+    
+    init(title: String) {
+        self.title = title
+    }
+}
+
 enum FeedType: String, Codable {
     case image = "image"
     case video = "video"
@@ -25,7 +48,7 @@ class Feed: NSObject, Codable {
     var subline: String = ""
     var data: String = ""
     var score: Int = -1
-    var items: [String] = [String]()
+    var items: [ShoppingItem] = [ShoppingItem]()
     var type: FeedType = .image
     
     init(jsonFeed: [String: Any]) {
@@ -81,7 +104,7 @@ class Feed: NSObject, Codable {
             self.score = data
         }
         
-        if let data = aDecoder.decodeObject(forKey: "items") as? [String] {
+        if let data = aDecoder.decodeObject(forKey: "items") as? [ShoppingItem] {
             self.items = data
         }
         

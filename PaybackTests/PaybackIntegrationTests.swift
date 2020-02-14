@@ -12,7 +12,7 @@ import XCTest
 class PaybackIntegrationTests: XCTestCase {
 
     let extractedExpr: LocalStorage = LocalStorage.shared
-    
+    let service = FeedService.shared
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -23,7 +23,7 @@ class PaybackIntegrationTests: XCTestCase {
 
     func testGetTiles() {
         let postsExpectation = expectation(description: "Get Posts")
-        _ = FeedService().loadFeeds(completion: { feeds,error in
+        _ = service.loadFeeds(completion: { feeds,error in
             if feeds != nil && feeds!.count > 1 {
                 postsExpectation.fulfill()
             }
@@ -33,7 +33,7 @@ class PaybackIntegrationTests: XCTestCase {
     
     func testLocalFeeds() {
         let postsExpectation = expectation(description: "Get Posts")
-        _ = FeedService().loadFeeds(completion: {[weak self] feeds,error in
+        _ = service.loadFeeds(completion: {[weak self] feeds,error in
             guard let self = self else { return }
             let localFeeds = self.extractedExpr.localWebFeeds()
             if localFeeds.count > 0 {
@@ -47,16 +47,16 @@ class PaybackIntegrationTests: XCTestCase {
         let feed = extractedExpr.shoppingListFeed()
         XCTAssertTrue(feed.type == .shopping_list)
     }
-    
+        
     func testAddShopingListItemsAndSave() {
         
         let feed = extractedExpr.shoppingListFeed()
-        feed.items = ["iPhone", "iPad", "Apple Watch"]
+        feed.items = [ShoppingItem(title: "iPhone"), ShoppingItem(title: "iPhone"), ShoppingItem(title: "iPhone")]
         extractedExpr.saveShoppingList(feed: feed)
         
         let localFeed = LocalStorage.shared.shoppingListFeed()
         XCTAssertTrue(localFeed.items.count == 3)
-        XCTAssertEqual(localFeed.items.first, "iPhone")
+        XCTAssertEqual(localFeed.items.first?.title, "iPhone")
         
     }
 
