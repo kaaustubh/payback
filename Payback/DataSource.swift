@@ -8,8 +8,11 @@
 
 import Foundation
 import UIKit
+import AVFoundation
+import AVKit
+import MediaPlayer
 
-class DataSource: GenericDataSource<Feed>, UITableViewDataSource {
+class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
            return 1
        }
@@ -19,6 +22,7 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource {
        }
        
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let feed = self.data.value[indexPath.row]
         switch feed.type {
         case .image, .video:
@@ -34,6 +38,50 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource {
         }
         return UITableViewCell()
        }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let feed = self.data.value[indexPath.row]
+        if feed.type == .video {
+            if let url = URL(string: feed.data) {
+                self.playVideo(url: url)
+            }
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    // this is not the place to play a video, it should have been done by ViewModel, but I couldnt figure out a way to do that.
+    func playVideo(url: URL) {
+        let player = AVPlayer(url: url)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        if let topMostcontroller = self.topMostController() {
+            topMostcontroller.present(playerViewController, animated: true, completion: {
+               playerViewController.player!.play()
+            })
+        }
+    }
+    
+    func topMostController() -> UIViewController? {
+        let keyWindow = UIApplication.shared.connectedScenes
+        .filter({$0.activationState == .foregroundActive})
+        .map({$0 as? UIWindowScene})
+        .compactMap({$0})
+        .first?.windows
+        .filter({$0.isKeyWindow}).first
+        
+        guard let window = keyWindow, let rootViewController = window.rootViewController else {
+            return nil
+        }
+
+        var topController = rootViewController
+
+        while let newTopController = topController.presentedViewController {
+            topController = newTopController
+        }
+
+        return topController
+    }
 }
 
 class DynamicValue<T> {

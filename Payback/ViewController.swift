@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.dataSource = self.dataSource
+        //This also should not be done, there  should be a different delegate class  to handle tableview deletation
+        self.tableView.delegate = self.dataSource
         self.dataSource.data.addAndNotify(observer: self) { [weak self] _ in
             self?.tableView.reloadData()
         }
