@@ -11,6 +11,7 @@
 		3265D34323F5A38B00FFAB68 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3265D34223F5A38B00FFAB68 /* DataSource.swift */; };
 		3265D34523F6ECDA00FFAB68 /* NormalFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3265D34423F6ECDA00FFAB68 /* NormalFeedCell.swift */; };
 		3265D34723F7002800FFAB68 /* WebFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3265D34623F7002800FFAB68 /* WebFeedCell.swift */; };
+		3265D34923F8648700FFAB68 /* ShoppingListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3265D34823F8648700FFAB68 /* ShoppingListDataSource.swift */; };
 		32C874B723ED8CB90083E38A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C874B623ED8CB90083E38A /* AppDelegate.swift */; };
 		32C874B923ED8CB90083E38A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C874B823ED8CB90083E38A /* SceneDelegate.swift */; };
 		32C874BB23ED8CB90083E38A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C874BA23ED8CB90083E38A /* ViewController.swift */; };
@@ -42,6 +43,7 @@
 		3265D34223F5A38B00FFAB68 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		3265D34423F6ECDA00FFAB68 /* NormalFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalFeedCell.swift; sourceTree = "<group>"; };
 		3265D34623F7002800FFAB68 /* WebFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebFeedCell.swift; sourceTree = "<group>"; };
+		3265D34823F8648700FFAB68 /* ShoppingListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListDataSource.swift; sourceTree = "<group>"; };
 		32C874B323ED8CB90083E38A /* Payback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Payback.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C874B623ED8CB90083E38A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32C874B823ED8CB90083E38A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				3265D34223F5A38B00FFAB68 /* DataSource.swift */,
 				3265D34423F6ECDA00FFAB68 /* NormalFeedCell.swift */,
 				3265D34623F7002800FFAB68 /* WebFeedCell.swift */,
+				3265D34823F8648700FFAB68 /* ShoppingListDataSource.swift */,
 			);
 			path = Payback;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C874D223ED8D5D0083E38A /* CustomError.swift in Sources */,
+				3265D34923F8648700FFAB68 /* ShoppingListDataSource.swift in Sources */,
 				32C874D823ED8E870083E38A /* Feed.swift in Sources */,
 				32C874BB23ED8CB90083E38A /* ViewController.swift in Sources */,
 				32C874D423ED8D7C0083E38A /* Path.swift in Sources */,

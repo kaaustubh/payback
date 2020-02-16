@@ -33,8 +33,10 @@ class FeedService: FeedServiceProtocol {
                     
                     if let fobs = jsonObj.value(forKey: "tiles"){
                        for jsonFeed in fobs as! NSArray {
-                            let feed = Feed(jsonFeed: jsonFeed as! [String : Any])
+                        let feed = Feed(jsonFeed: jsonFeed as! [String : Any])
+                        if feed.type != .shopping_list {
                             feeds.append(feed)
+                        }
                         }
                         if feeds.count > 0 {
                             LocalStorage.shared.saveWebFeeds(feeds: feeds)

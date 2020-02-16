@@ -10,6 +10,42 @@ import Foundation
 import AVFoundation
 import UIKit
 
+class ShoppingListParentCell: UITableViewCell {
+    
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var shoppingItemsTableView: UITableView!
+    var dataSource = ShoppingListDataSource()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+    }
+    
+    override func awakeFromNib() {
+        self.shoppingItemsTableView.dataSource = dataSource
+        self.shoppingItemsTableView.reloadData()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+    }
+    
+}
+
+class ShoppingListCell: UITableViewCell {
+    @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var itemLable: UILabel!
+    var item : ShoppingItem? {
+        didSet {
+            
+            guard let item = item else {
+                return
+            }
+            self.itemLable.text = item.title
+        }
+    }
+}
+
 class NormalFeedCell : UITableViewCell {
     @IBOutlet weak var headerLable: UILabel!
     @IBOutlet weak var feedimageView: UIImageView!
@@ -68,25 +104,25 @@ class NormalFeedCell : UITableViewCell {
 
 
 extension UIImageView {
-
-public func imageFromServerURL(urlString: String, PlaceHolderImage:UIImage) {
-
-       if self.image == nil{
-             self.image = PlaceHolderImage
-       }
-
-       URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
-
-           if error != nil {
-               print(error ?? "No Error")
-               return
-           }
-           DispatchQueue.main.async(execute: { () -> Void in
-               let image = UIImage(data: data!)
-               self.image = image
-           })
-
-       }).resume()
+    
+    public func imageFromServerURL(urlString: String, PlaceHolderImage:UIImage) {
+        
+        if self.image == nil{
+            self.image = PlaceHolderImage
+        }
+        
+        URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
+            
+            if error != nil {
+                print(error ?? "No Error")
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+            
+        }).resume()
     }
     
 }

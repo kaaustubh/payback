@@ -14,14 +14,14 @@ import MediaPlayer
 
 class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-           return 1
-       }
-       
-       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return data.value.count
-       }
-       
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data.value.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let feed = self.data.value[indexPath.row]
         switch feed.type {
@@ -33,11 +33,12 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
             let cell = tableView.dequeueReusableCell(withIdentifier: "WebFeedCell", for: indexPath) as! WebFeedCell
             cell.feed = feed
             return cell
-        default:
-            print("Default")
+            
+        case .shopping_list:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingList", for: indexPath) as! ShoppingListParentCell
+            return cell
         }
-        return UITableViewCell()
-       }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let feed = self.data.value[indexPath.row]
@@ -49,6 +50,15 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let feed = self.data.value[indexPath.row]
+        if feed.type == .shopping_list {
+            var height = 60
+            height += feed.items.count * 44
+            return CGFloat(height)
+        }
+        return 270
+    }
     
     // this is not the place to play a video, it should have been done by ViewModel, but I couldnt figure out a way to do that.
     func playVideo(url: URL) {
@@ -57,29 +67,29 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
         playerViewController.player = player
         if let topMostcontroller = self.topMostController() {
             topMostcontroller.present(playerViewController, animated: true, completion: {
-               playerViewController.player!.play()
+                playerViewController.player!.play()
             })
         }
     }
     
     func topMostController() -> UIViewController? {
         let keyWindow = UIApplication.shared.connectedScenes
-        .filter({$0.activationState == .foregroundActive})
-        .map({$0 as? UIWindowScene})
-        .compactMap({$0})
-        .first?.windows
-        .filter({$0.isKeyWindow}).first
+            .filter({$0.activationState == .foregroundActive})
+            .map({$0 as? UIWindowScene})
+            .compactMap({$0})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
         
         guard let window = keyWindow, let rootViewController = window.rootViewController else {
             return nil
         }
-
+        
         var topController = rootViewController
-
+        
         while let newTopController = topController.presentedViewController {
             topController = newTopController
         }
-
+        
         return topController
     }
 }
