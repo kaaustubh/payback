@@ -114,16 +114,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zg7-YX-c1D">
-                                                    <rect key="frame" x="10" y="46" width="0.0" height="222"/>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zg7-YX-c1D">
+                                                    <rect key="frame" x="20" y="52" width="380" height="198"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <color key="sectionIndexBackgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShoppingListCell" rowHeight="50" id="k9w-ti-RHY" customClass="ShoppingListCell" customModule="Payback" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="28" width="0.0" height="50"/>
+                                                            <rect key="frame" x="0.0" y="28" width="380" height="50"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k9w-ti-RHY" id="ocV-3t-cwC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="380" height="50"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZY-CK-kVQ">
@@ -168,11 +169,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="HR9-Ax-wYp" firstAttribute="leading" secondItem="BAW-tO-O1L" secondAttribute="leading" constant="10" id="Auf-8E-CDr"/>
-                                                <constraint firstAttribute="trailing" secondItem="Zg7-YX-c1D" secondAttribute="trailing" constant="10" id="FK1-H3-3BA"/>
-                                                <constraint firstItem="Zg7-YX-c1D" firstAttribute="top" secondItem="HR9-Ax-wYp" secondAttribute="bottom" constant="1" id="HiU-9b-KjE"/>
                                                 <constraint firstAttribute="trailing" secondItem="HR9-Ax-wYp" secondAttribute="trailing" constant="10" id="XtZ-wP-Bz2"/>
-                                                <constraint firstItem="Zg7-YX-c1D" firstAttribute="leading" secondItem="BAW-tO-O1L" secondAttribute="leading" constant="10" id="n4c-lo-7QA"/>
-                                                <constraint firstAttribute="bottom" secondItem="Zg7-YX-c1D" secondAttribute="bottom" constant="2" id="o09-wP-cQS"/>
                                                 <constraint firstItem="HR9-Ax-wYp" firstAttribute="top" secondItem="BAW-tO-O1L" secondAttribute="top" constant="1" id="ujc-PH-xKx"/>
                                             </constraints>
                                         </tableViewCellContentView>

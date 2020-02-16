@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ShoppingListDataSource: NSObject, UITableViewDataSource {
+class ShoppingListDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     var feed: Feed = LocalStorage.shared.shoppingListFeed()
     
@@ -25,5 +25,12 @@ class ShoppingListDataSource: NSObject, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingListCell", for: indexPath) as! ShoppingListCell
         cell.item = feed.items[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        feed.items[indexPath.row].complete = true
+        LocalStorage.shared.saveShoppingList(feed: feed)
+        tableView.reloadData()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

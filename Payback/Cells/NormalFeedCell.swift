@@ -22,6 +22,7 @@ class ShoppingListParentCell: UITableViewCell {
     
     override func awakeFromNib() {
         self.shoppingItemsTableView.dataSource = dataSource
+        self.shoppingItemsTableView.delegate = dataSource
         self.shoppingItemsTableView.reloadData()
     }
     
@@ -32,19 +33,7 @@ class ShoppingListParentCell: UITableViewCell {
     
 }
 
-class ShoppingListCell: UITableViewCell {
-    @IBOutlet weak var checkBoxButton: UIButton!
-    @IBOutlet weak var itemLable: UILabel!
-    var item : ShoppingItem? {
-        didSet {
-            
-            guard let item = item else {
-                return
-            }
-            self.itemLable.text = item.title
-        }
-    }
-}
+
 
 class NormalFeedCell : UITableViewCell {
     @IBOutlet weak var headerLable: UILabel!
