@@ -37,9 +37,9 @@ class FeedService: FeedServiceProtocol {
                         if feed.type != .shopping_list {
                             feeds.append(feed)
                         }
-                        }
-                        if feeds.count > 0 {
+                        else {
                             LocalStorage.shared.saveWebFeeds(feeds: feeds)
+                        }
                         }
                     }
                     feeds.append(LocalStorage.shared.shoppingListFeed())

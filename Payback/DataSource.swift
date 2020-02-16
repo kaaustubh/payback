@@ -42,11 +42,20 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let feed = self.data.value[indexPath.row]
-        if feed.type == .video {
+        switch feed.type {
+        case .video:
             if let url = URL(string: feed.data) {
                 self.playVideo(url: url)
             }
+        case .image:
+            showImage(url: feed.data)
+        case .website:
+            print("show website")
+        
+        case .shopping_list:
+            print("do nothing")
         }
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -58,6 +67,18 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
             return CGFloat(height)
         }
         return 270
+    }
+    
+    func showImage(url: String) {
+        let controller = UIViewController()
+        controller.view.backgroundColor = .white
+        let imageView = UIImageView(frame: controller.view.frame)
+        imageView.contentMode = .center
+        imageView.imageFromServerURL(urlString: url, PlaceHolderImage: UIImage())
+        controller.view.addSubview(imageView)
+        if let topMostcontroller = self.topMostController() {
+            topMostcontroller.present(controller, animated: true, completion: nil)
+        }
     }
     
     // this is not the place to play a video, it should have been done by ViewModel, but I couldnt figure out a way to do that.
