@@ -50,7 +50,9 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
         case .image:
             showImage(url: feed.data)
         case .website:
-            print("show website")
+            if let url = URL(string: feed.data) {
+                UIApplication.shared.open(url)
+            }
         
         case .shopping_list:
             print("do nothing")

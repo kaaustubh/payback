@@ -29,8 +29,9 @@ class ShoppingListDataSource: NSObject, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        feed.items[indexPath.row].complete = true
-        LocalStorage.shared.saveShoppingList(feed: feed)
+        let shoppingListFeed = LocalStorage.shared.shoppingListFeed()
+        shoppingListFeed.items[indexPath.row].complete = true
+        LocalStorage.shared.saveShoppingList(feed: shoppingListFeed)
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }

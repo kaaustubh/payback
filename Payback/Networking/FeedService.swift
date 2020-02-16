@@ -22,9 +22,11 @@ class FeedService: FeedServiceProtocol {
     func loadFeeds(completion: @escaping ([Feed]?, CustomError?) -> ()) -> URLSessionDataTask? {
         let params: JSON = ["cache-control": "no-cache"]
         
-        return client.load(path: "", method: .get, params: params) { result, error in
+        return client.load(path: "", method: .get, params: params) {[weak self] result, error in
+            guard let self = self else {return}
+            
             if (error != nil) {
-                completion(nil, error)
+                self.returnLocalFeeds(completion: completion)
             }
             else if (result != nil) {
                 do {
@@ -49,14 +51,20 @@ class FeedService: FeedServiceProtocol {
                     completion(feeds, nil)
                 }
                 catch {
-                    completion(nil, CustomError(code: 405, type: "Corrupted data", message: "Data is corrupt"))
+                    self.returnLocalFeeds(completion: completion)
                 }
                 
             }
             else {
-                completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
+                self.returnLocalFeeds(completion: completion)
             }
         }
+    }
+    
+    func returnLocalFeeds(completion: @escaping ([Feed]?, CustomError?) -> ()) {
+        var feeds = LocalStorage.shared.localWebFeeds()
+        feeds.append(LocalStorage.shared.shoppingListFeed())
+        completion(feeds, nil)
     }
 }
 
