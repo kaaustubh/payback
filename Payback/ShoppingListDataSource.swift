@@ -13,6 +13,7 @@ class ShoppingListDataSource: NSObject, UITableViewDataSource, UITableViewDelega
     
     var feed: Feed = LocalStorage.shared.shoppingListFeed()
     
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

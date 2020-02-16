@@ -114,17 +114,26 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zg7-YX-c1D">
-                                                    <rect key="frame" x="20" y="52" width="380" height="198"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR9-Ax-wYp">
+                                                    <rect key="frame" x="10" y="1" width="0.0" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="eOQ-MO-4mR"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Add Item"/>
+                                                    <connections>
+                                                        <action selector="addItemButtonTapped" destination="OTv-fx-ZIF" eventType="touchUpInside" id="hhb-Mb-Dgx"/>
+                                                    </connections>
+                                                </button>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zg7-YX-c1D">
+                                                    <rect key="frame" x="16" y="53" width="0.0" height="206"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <color key="sectionIndexBackgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShoppingListCell" rowHeight="50" id="k9w-ti-RHY" customClass="ShoppingListCell" customModule="Payback" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="28" width="380" height="50"/>
+                                                            <rect key="frame" x="0.0" y="28" width="0.0" height="50"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k9w-ti-RHY" id="ocV-3t-cwC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="380" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZY-CK-kVQ">
@@ -159,17 +168,14 @@
                                                         </tableViewCell>
                                                     </prototypes>
                                                 </tableView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HR9-Ax-wYp">
-                                                    <rect key="frame" x="10" y="1" width="0.0" height="44"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="eOQ-MO-4mR"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Add Item"/>
-                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Zg7-YX-c1D" firstAttribute="top" secondItem="HR9-Ax-wYp" secondAttribute="bottom" constant="8" symbolic="YES" id="1Lb-WA-jv1"/>
                                                 <constraint firstItem="HR9-Ax-wYp" firstAttribute="leading" secondItem="BAW-tO-O1L" secondAttribute="leading" constant="10" id="Auf-8E-CDr"/>
                                                 <constraint firstAttribute="trailing" secondItem="HR9-Ax-wYp" secondAttribute="trailing" constant="10" id="XtZ-wP-Bz2"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Zg7-YX-c1D" secondAttribute="trailing" id="YRV-hr-BcS"/>
+                                                <constraint firstItem="Zg7-YX-c1D" firstAttribute="leading" secondItem="BAW-tO-O1L" secondAttribute="leadingMargin" id="hZl-h3-Vjk"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Zg7-YX-c1D" secondAttribute="bottom" id="kST-WN-2I7"/>
                                                 <constraint firstItem="HR9-Ax-wYp" firstAttribute="top" secondItem="BAW-tO-O1L" secondAttribute="top" constant="1" id="ujc-PH-xKx"/>
                                             </constraints>
                                         </tableViewCellContentView>

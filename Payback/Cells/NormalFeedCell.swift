@@ -24,6 +24,46 @@ class ShoppingListParentCell: UITableViewCell {
         self.shoppingItemsTableView.dataSource = dataSource
         self.shoppingItemsTableView.delegate = dataSource
         self.shoppingItemsTableView.reloadData()
+        
+    }
+    
+    @IBAction func addItemButtonTapped() {
+        let alert = UIAlertController(title: "Add Item", message: "", preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] (_) in
+            if let textField = alert?.textFields![0], let text = textField.text  // Force unwrapping because we know it exists.
+            {
+            let shoppingList = LocalStorage.shared.shoppingListFeed()
+                shoppingList.items.append(ShoppingItem(title: text))
+                LocalStorage.shared.saveShoppingList(feed: shoppingList)
+                guard let weakself = self else {
+                    return
+                }
+                weakself.shoppingItemsTableView.reloadData()
+                
+                DataSource().data.notify()
+            }
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { [weak alert] (_) in
+            if let alert = alert {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }))
+        
+        
+
+        // 4. Present the alert.
+        if let topviewController = DataSource().topMostController() {
+            topviewController.present(alert, animated: true, completion: nil)
+        }
     }
     
     required init?(coder: NSCoder) {

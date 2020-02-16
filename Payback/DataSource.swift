@@ -54,7 +54,7 @@ class DataSource: GenericDataSource<Feed>, UITableViewDataSource, UITableViewDel
         let feed = self.data.value[indexPath.row]
         if feed.type == .shopping_list {
             var height = 60
-            height += feed.items.count * 44
+            height += feed.items.count * 52
             return CGFloat(height)
         }
         return 270
@@ -119,7 +119,7 @@ class DynamicValue<T> {
         self.notify()
     }
     
-    private func notify() {
+    func notify() {
         observers.forEach({ $0.value(value) })
     }
     
