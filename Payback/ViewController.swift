@@ -32,6 +32,10 @@ class ViewController: UIViewController {
         
         
     }
+    
+    @objc private func reloadTableView(notification: NSNotification){
+        self.tableView.reloadData()
+    }
 
     
 

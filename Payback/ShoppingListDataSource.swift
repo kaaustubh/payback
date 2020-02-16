@@ -19,12 +19,12 @@ class ShoppingListDataSource: NSObject, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feed.items.count
+        return LocalStorage.shared.shoppingListFeed().items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingListCell", for: indexPath) as! ShoppingListCell
-        cell.item = feed.items[indexPath.row]
+        cell.item = LocalStorage.shared.shoppingListFeed().items[indexPath.row]
         return cell
     }
     

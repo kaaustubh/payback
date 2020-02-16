@@ -46,8 +46,7 @@ class ShoppingListParentCell: UITableViewCell {
                     return
                 }
                 weakself.shoppingItemsTableView.reloadData()
-                
-                DataSource().data.notify()
+                NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "reloadtableview")))
             }
             
         }))
