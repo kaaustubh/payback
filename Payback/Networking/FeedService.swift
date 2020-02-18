@@ -21,7 +21,12 @@ class FeedService: FeedServiceProtocol {
     @discardableResult
     func loadFeeds(completion: @escaping ([Feed]?, CustomError?) -> ()) -> URLSessionDataTask? {
         let params: JSON = ["cache-control": "no-cache"]
-        
+        if let lastdate = LocalStorage.shared.lastUpdatedDate(){
+             if let diff = Calendar.current.dateComponents([.hour], from: lastdate, to: Date()).hour, diff < 24 {
+                self.returnLocalFeeds(completion: completion)
+                return nil
+               }
+        }
         return client.load(path: "", method: .get, params: params) {[weak self] result, error in
             guard let self = self else {return}
             
@@ -47,7 +52,7 @@ class FeedService: FeedServiceProtocol {
                     feeds.append(LocalStorage.shared.shoppingListFeed())
                     //Somehow this doesnt work because of \ and \n
 //                    let postResponse = try JSONDecoder().decode(FeedResponse.self, from: strData as! Data)
-                    
+                    LocalStorage.shared.saveDate(date: Date())
                     completion(feeds, nil)
                 }
                 catch {
@@ -68,12 +73,27 @@ class FeedService: FeedServiceProtocol {
     }
 }
 
-let shoppingListKey = "shopping_list"
-let webFeeds = "webfeeds"
 
 class LocalStorage {
     static let shared = LocalStorage()
+    
+    let shoppingListKey = "shopping_list"
+    let webFeeds = "webfeeds"
+    let lastDate = "lastupdateddate"
+    
     let userDefaults = UserDefaults.standard
+    
+    func saveDate(date: Date) {
+        userDefaults.set(date, forKey: lastDate)
+        userDefaults.synchronize()
+    }
+    
+    func lastUpdatedDate() -> Date? {
+        guard let date = userDefaults.object(forKey: lastDate) as? Date else {
+            return nil
+        }
+        return date
+    }
     
     func saveWebFeeds(feeds: [Feed]){
         saveData(data: feeds, for: webFeeds)
